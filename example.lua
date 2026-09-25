@@ -60,6 +60,7 @@ Left:AddSlider("WalkSpeed", {
     Max = 200,
     Default = 16,
     Rounding = 0,
+    Smooth = true,   -- ทวีนตอนเซ็ตค่า/แตะ (ค่าเริ่มต้น true) มือถือลากได้ลื่นขึ้น
     Callback = function(Value)
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
     end
