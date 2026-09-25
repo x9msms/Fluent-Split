@@ -19,11 +19,10 @@ local Window = Fluent:CreateWindow({
     Title = "My Script Hub",
     SubTitle = "แยกซ้าย-ขวา",
     TabWidth = 160,
-    Size = UDim2.fromOffset(720, 480),   -- ขนาดอ้างอิง (ระบบจะปรับให้พอดีจอเอง)
-    AutoFit   = true,   -- ปรับขนาด/สเกลให้พอดีจอ (default true)
-    MaxScale  = 1,      -- ไม่ขยายเกิน 100% (ตั้ง 1.25 ได้ถ้าอยากให้ใหญ่ขึ้นบนจอใหญ่)
-    MinScale  = 0.75,   -- ย่อได้ต่ำสุด 75% หลังจากนั้นจะลดขนาดหน้าต่างแทน
-    FitMargin = 32,     -- เว้นขอบจอ (px)
+    Size = UDim2.fromOffset(720, 480), -- ขนาดตอนออกแบบ ระบบจะขยายให้ใหญ่ตามจอเอง
+    AutoFit = true,   -- เปิดอยู่แล้วเป็นค่าเริ่มต้น: จอใหญ่ขยายขึ้น, จอมือถือยืดเต็มจอ
+    -- อย่าใส่ MaxScale = 1 / MinScale = 0.75 อีก (ค่าเก่าทำให้หน้าต่างเล็กและทับกัน)
+    -- อยากจำกัดขนาดเองค่อยใส่ MaxScale = 1.4 (ต้องมากกว่า 1)
     Acrylic = true,
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl
