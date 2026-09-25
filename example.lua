@@ -7,6 +7,12 @@
     ต้องส่ง 2 อาร์กิวเมนต์:  AddToggle("ชื่อFlag", { Title = "...", ... })
     ส่วน Button กับ Paragraph ส่งแค่ตาราง config:  AddButton({ Title = "...", ... })
     ถ้าส่งแค่ตาราง config ให้ AddToggle จะ error ทันที (หา Title ไม่เจอ)
+
+    *** เกี่ยวกับหน้าตอ ***
+    - พื้นหลังทึบสนิท ไม่ใส ไม่มี acrylic/blur (ตัวเลือก Acrylic ไม่มีผลแล้ว)
+    - มุมเหลี่ยมทั้งหมด ไม่มีมุมโค้ง
+    - UI ทั้งหมดย่อ/ขยาย *พร้อมกัน* กับหน้าต่าง (UIScale) ไม่มีของหลุด/ทับ/เงบ
+      ปรับได้ด้วย MinScale / MaxScale / FitMargin ด้านล่าง
 ]]
 
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/x9msms/Fluent-Split/main/main.lua"))()
@@ -19,11 +25,17 @@ local Window = Fluent:CreateWindow({
     Title = "My Script Hub",
     SubTitle = "แยกซ้าย-ขวา",
     TabWidth = 160,
-    Size = UDim2.fromOffset(720, 480), -- ขนาดตอนออกแบบ ระบบจะขยายให้ใหญ่ตามจอเอง
-    AutoFit = true,   -- เปิดอยู่แล้วเป็นค่าเริ่มต้น: จอใหญ่ขยายขึ้น, จอมือถือยืดเต็มจอ
-    -- อย่าใส่ MaxScale = 1 / MinScale = 0.75 อีก (ค่าเก่าทำให้หน้าต่างเล็กและทับกัน)
-    -- อยากจำกัดขนาดเองค่อยใส่ MaxScale = 1.4 (ต้องมากกว่า 1)
-    Acrylic = true,
+    Size = UDim2.fromOffset(720, 480), -- "ขนาดตอนออกแบบ" — ขนาดที่เห็นจริง = Size × scale
+
+    AutoFit = true,    -- เปิดอยู่แล้วเป็นค่าเริ่มต้น: จอใหญ่ขยายขึ้น, มือถือย่อลง
+    MaxScale = 1.6,    -- ขยายสูงสุดบนจอใหญ่ (ต้อง > 1)
+    MinScale = 0.75,   -- ย่อต่ำสุด (0.2–1) ถ้าแคบกว่านี้จะลด design size แทน ไม่บีบ content
+    FitMargin = 8,     -- เว้นขอบจอ (px)
+
+    -- อย่าใส่ MaxScale = 1 / MinScale = 0.75 แบบตัวอย่างเก่า
+    -- เดิมค่าทำให้หน้าต่างเล็กและทับกัน ตอนนี้ใช้ตัวเลขนี้ได้เลย (มีความหมายถูกต้องแล้ว)
+
+    -- Acrylic = true,  -- ไม่มีผลแล้ว  UI ทึบหมดอยู่แล้ว
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl
 })
@@ -87,6 +99,12 @@ Right:AddDropdown("Weapon", {
     end
 })
 
+Right:AddInput("Webhook", {
+    Title = "Webhook",
+    Placeholder = "https://discord.com/api/webhooks/...",
+    Callback = function(v) print("webhook:", v) end
+})
+
 -------------------------------------------------------------------------------
 -- แบบที่ 2: สไตล์ Linoria — AddLeftGroupbox / AddRightGroupbox
 -------------------------------------------------------------------------------
@@ -105,17 +123,21 @@ L:AddColorpicker("AccentColor", {
     Callback = function(v) print("สี:", v) end
 })
 
-R:AddInput("Webhook", {
-    Title = "Webhook",
-    Placeholder = "https://discord.com/api/webhooks/...",
-    Callback = function(v) print("webhook:", v) end
-})
-
 R:AddKeybind("ToggleUI", {
     Title = "Toggle UI",
     Mode = "Toggle",
     Default = "LeftControl",
     Callback = function(v) print("keybind:", v) end
+})
+
+R:AddInput("PlayerName", {
+    Title = "Player Name",
+    Callback = function(v) print("name:", v) end
+})
+
+R:AddParagraph({
+    Title = "ทิป",
+    Content = "แถวนี้อยู่ฝั่งขวาอัตโนมัติเพราะอยู่ใน RightGroupbox"
 })
 
 -------------------------------------------------------------------------------
